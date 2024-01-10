@@ -1,0 +1,28 @@
+[global]
+
+  monitor = 0
+  follow = mouse
+  width = 320
+  height = 320
+  corner_radius = 10
+  font = Hack Nerd Font Mono 16
+
+  frame_color = "#8AADF4"
+  separator_color= frame
+
+[urgency_low]
+
+  background = "#24273A"
+  foreground = "#CAD3F5"
+
+[urgency_normal]
+
+  background = "#24273A"
+  foreground = "#CAD3F5"
+
+[urgency_critical]
+
+  background = "#24273A"
+  foreground = "#CAD3F5"
+  frame_color = "#F5A97F"
+

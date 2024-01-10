@@ -1,0 +1,50 @@
+(defvar     bluetooth       "{}")
+(defvar     network         "{}")
+(defvar     media           "{}")
+(defvar     media_positions "{}")
+(defvar     battery         "{}")
+(defvar     notifications   "{}")
+(defvar     apps            "{}")
+
+(deflisten  window      `scripts/hyprland window`)
+(deflisten  workspaces  `scripts/hyprland workspaces`)
+
+(defpoll    volume      :interval "100s" :initial "{}" `scripts/volume get`)
+(defpoll    theme       :interval "100s" :initial "{}" `scripts/theme get`)
+(defpoll    power       :interval "300s" :initial "{}" `scripts/power get`)
+(defpoll    night_light :interval "300s" :initial "{}" `scripts/night_light get`)
+(defpoll    brightness  :interval "100s" :initial "{}" `scripts/brightness get`)
+
+(deflisten  events      :initial "[]" `scripts/events get`)
+(defpoll    weather     :interval "30m" :initial "[]" `scripts/weather`)
+
+(defpoll    panel_clock :interval "60s" `date "+%H:%M  |  %b. %d. %A"`)
+(defpoll    hour        :interval "60s" `date "+%H"`)
+(defpoll    minutes     :interval "60s" `date "+%M"`)
+(defpoll    date        :interval "60s" `date "+%b. %d. %A"`)
+(defpoll    uptime      :interval "600s" "uptime | awk '{print $3}' | tr ',' ' '")
+
+(defvar real_name "Demeter")
+(defvar user_name "@Aylur")
+
+(include "./yuck/widgets.yuck")
+(include "./yuck/windows.yuck")
+(include "./setups/topbar.yuck")
+
+(defpoll battery_check :interval "200s" "if [ $(cat /sys/class/power_supply/BAT0/capacity) -lt 20 ]; then notify-send -u critical 'low battery!'; fi")
+
+(defwidget greeter []
+  battery_check)
+
+
+(defwindow example
+           :monitor 0
+           :geometry (geometry :x "0%"
+                               :y "20px"
+                               :width "90%"
+                               :height "30px"
+                               :anchor "top center")
+           :stacking "fg"
+           :wm-ignore false
+  (greeter))
+
